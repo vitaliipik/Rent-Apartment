@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:models="clr-namespace:reeltorapp.Models;assembly=reeltorapp"
+             xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+             xmlns:viewmodels="clr-namespace:reeltorapp.ViewModels"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="reeltorapp.Views.LoginPage"
+             x:DataType="viewmodels:LoginPageViewModel"
+             Shell.FlyoutBehavior="Disabled"
+             Shell.NavBarIsVisible="False"
+            >
+    <ContentPage.BindingContext>
+        <viewmodels:LoginPageViewModel/>
+    </ContentPage.BindingContext>
+    <ContentPage.Content>
+        <StackLayout Padding="40" VerticalOptions="Center"
+                     HorizontalOptions="FillAndExpand">
+            <Label Text="Username:"/>
+            <Entry Placeholder="Username"/>
+            <Label Text="Password:"/>
+            <Entry IsPassword="True" Placeholder="Password"/>
+            <Button Text="Login" Command="{Binding Button_ClickedCommand}"/>
+            <Label Text="Register" HorizontalOptions="Center">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding   TapGestureRecognizer_TappedCommand}"/>
+                </Label.GestureRecognizers>
+            </Label>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

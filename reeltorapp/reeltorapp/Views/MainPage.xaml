@@ -1,0 +1,105 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:reeltorapp"
+             xmlns:viewmodels="clr-namespace:reeltorapp.ViewModels"
+             xmlns:system="clr-namespace:System;assembly=netstandard"
+             xmlns:models="clr-namespace:reeltorapp.Models;assembly=reeltorapp"
+             xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+             x:Class="reeltorapp.Views.MainPage"
+             x:DataType="viewmodels:RealtorEquipmentViewModel"
+             xmlns:mvvm="clr-namespace:MvvmHelpers;assembly=MvvmHelpers"
+             x:Name="HousePage" 
+            
+>
+            
+    <ContentPage.BindingContext>
+        <viewmodels:RealtorEquipmentViewModel/>
+    </ContentPage.BindingContext>
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            
+            <xct:ItemSelectedEventArgsConverter x:Key="ItemSelectedEventArgsConverter"></xct:ItemSelectedEventArgsConverter>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Logout" Command="{Binding ToolbarItem_ClickedCommand}"></ToolbarItem>
+    </ContentPage.ToolbarItems>
+    <ListView 
+        
+       SelectedItem="{Binding SelectedHouse,Mode=TwoWay}"
+        CachingStrategy="RecycleElement"
+       BackgroundColor="{AppThemeBinding 
+                        Dark={StaticResource WindowBackgroundColorDark}, 
+                        Light={StaticResource WindowBackgroundColor}}"
+              ItemsSource="{Binding House} "
+       SeparatorColor="Azure"
+              SeparatorVisibility="Default"
+              IsPullToRefreshEnabled="True"
+       HasUnevenRows="True"
+              IsRefreshing="{Binding IsBusy,Mode=OneWay}"
+              RefreshCommand="{Binding RefreshCommand}"
+              RefreshControlColor="Aqua"><!--IsGroupingEnabled="True"
+              GroupDisplayBinding="{Binding Key}"
+   -->
+
+        <ListView.Behaviors>
+           <xct:EventToCommandBehavior
+               EventName="ItemSelected"
+               Command="{Binding SelectedCommand}"
+               EventArgsConverter="{StaticResource ItemSelectedEventArgsConverter}"></xct:EventToCommandBehavior>
+       </ListView.Behaviors>
+     
+        <ListView.ItemTemplate>
+            
+            
+            <DataTemplate x:DataType="models:House">
+         
+                    
+               
+                <ViewCell>
+                 
+                        <ViewCell.ContextActions >
+                            <MenuItem Text="Favorite"  x:DataType="viewmodels:RealtorEquipmentViewModel"
+                                      IsDestructive="True" Command="{Binding 
+                                  Source={x:Reference HousePage} ,
+                                  Path=BindingContext.FavoruteCommand}"
+                                      CommandParameter="{Binding .}"
+                                      ></MenuItem>
+                        
+                        
+                        </ViewCell.ContextActions>
+                    
+                    <Grid Padding="10">
+                    <Frame CornerRadius="20"
+                           HasShadow="True">
+                        <StackLayout  Orientation="Horizontal">
+                            <Image Source="{Binding Image}" WidthRequest="90"></Image>
+                            <StackLayout>
+                        <Label VerticalOptions="Center" 
+                               FontSize="Large"
+                               Text="{Binding Name}"/>
+                        <Label VerticalOptions="Center" 
+                               FontSize="13"
+                               Text="{Binding Locate}"/>
+                            </StackLayout>
+                          
+                        </StackLayout>
+                    </Frame>
+                  
+                </Grid>
+                </ViewCell>
+            </DataTemplate>
+        </ListView.ItemTemplate>
+        
+            <ListView.Footer>
+                <StackLayout Orientation="Horizontal">
+                <Button Text="Load More" HorizontalOptions="Center" Command="{Binding LoadMoreCommand}"></Button>
+                    
+                </StackLayout>
+            </ListView.Footer>
+        
+    </ListView>
+    
+
+</ContentPage>

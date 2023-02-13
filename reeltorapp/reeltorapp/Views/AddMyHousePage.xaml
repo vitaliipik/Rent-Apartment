@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="reeltorapp.Views.AddMyHousePage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:viewmodel="clr-namespace:reeltorapp.ViewModels;assembly=reeltorapp"
+    x:DataType="viewmodel:AddMyHouseViewModel"
+    Title="{Binding Title}"
+    
+    
+       Shell.PresentationMode="Modal"
+    BackgroundColor="{AppThemeBinding 
+                        Dark={StaticResource WindowBackgroundColorDark}, 
+                        Light={StaticResource WindowBackgroundColor}}">
+    <ContentPage.BindingContext>
+        <viewmodel:AddMyHouseViewModel />
+    </ContentPage.BindingContext>
+    <ContentPage.Content>
+        <StackLayout Padding="20">
+            <Label Text="Name:"
+                   Style="{StaticResource LabelMedium}" />
+            <Entry Text="{Binding Name}"  Style="{StaticResource LabelMedium}" />
+            <Label Text="Locate:"  Style="{StaticResource LabelMedium}"
+                    />
+            <Entry Text="{Binding Locate}"  Style="{StaticResource LabelMedium}" />
+            <Label Text="Price:" Style="{StaticResource LabelMedium}"
+            />
+            <Entry Text="{Binding Price}" Style="{StaticResource LabelMedium}" />
+<Label Text="Type:" Style="{StaticResource LabelMedium}"
+            />
+            <Entry Text="{Binding Type}" Style="{StaticResource LabelMedium}" />
+
+            <ActivityIndicator
+                HorizontalOptions="Center"
+                IsRunning="{Binding IsBusy}"
+                IsVisible="{Binding IsBusy}"
+                VerticalOptions="Center" />
+
+            <Button
+                Padding="20,0"
+                Command="{Binding SaveCommand}"
+                HorizontalOptions="Center"
+                IsEnabled="{Binding IsNotBusy}"
+                Text="Save"
+                VerticalOptions="EndAndExpand"
+                Style="{StaticResource ButtonOutline}"
+                />
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
